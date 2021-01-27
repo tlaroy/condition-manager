@@ -1,0 +1,36 @@
+{
+    "name": "condition-manager",
+    "title": "Condition Manager",
+    "description": "Adds a macro interface for management of applied conditions.",
+    "version": "0.0.1",
+    "minimumCoreVersion": "0.7.0",
+    "compatibleCoreVersion": "0.7.9",
+    "author": "Nokturnel",
+    "packs": [
+        {
+            "name": "condition-manager-macros",
+            "label": "Condition Manager",
+            "path": "packs/condition-manager-macros.db",
+            "entity": "Macro",
+            "module": "condition-manager"
+        }
+    ],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        }
+    ],
+    "scripts": [ ],
+    "esmodules": [ "./condition_manager.js" ],
+    "dependencies": [
+        {
+            "name" : "dnd5e",
+            "type" : "system"
+        },
+    "socket": true,
+    "url": "https://github.com/tlaroy/condition-manager",
+    "manifest": "https://github.com/tlaroy/condition-manager/raw/main/module.json",
+    "download": "https://github.com/tlaroy/condition-manager/raw/main/downloads/condition-manager-v0.0.1.zip"
+}
