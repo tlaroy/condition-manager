@@ -2,7 +2,7 @@
  * Condition Manager.
  *
  *      ./module/const.js
- *      v0.0.2
+ *      v0.0.3
  */
 
 /**
@@ -23,16 +23,10 @@ export const MIN_FOUNDRY_VERSION             = "0.7.9";
 export const MIN_DND5E_VERSION               = "1.2.0";
 export const MIN_COMBAT_UTILITY_BELT_VERSION = "1.3.8";
 export const COMBAT_UTILITY_BELT_MODULE_NAME = "combat-utility-belt";
-export const CF_MODULE_NAME                  = "condition-manager";
-export const CF_NAME                         = "CONDITION MANAGER";
-export const CF_LABEL                        = "cmgr";
-export const CF_VERSION                      = "0.0.1";
-
-/**
-* options.
-*/
-
-export const CF_ENABLED                      = "enabled";
+export const CM_MODULE_NAME                  = "condition-manager";
+export const CM_NAME                         = "CONDITION MANAGER";
+export const CM_LABEL                        = "cm";
+export const CM_VERSION                      = "0.0.3";
 
 /**
 * effect attribute change modes.
@@ -54,7 +48,7 @@ export const ATTRIBUTE_VALUE       = 1;
 export const PRIORITY              = 2;
 
 /**
-* flag index.
+* flag indexes.
 */
 
 export const CORE_STATUS_ID        = 0;
@@ -63,7 +57,7 @@ export const CUB_OVERLAY           = 2;
 export const DAE_SPECIAL_DURATION  = 3;
 
 /**
-* duration index.
+* duration indexes.
 */
 
 export const SECONDS               = 0;
@@ -74,7 +68,7 @@ export const ROUNDS                = 4;
 export const START_ROUND           = 5;
 
 /**
-* detail index.
+* detail indexes.
 */
 
 export const DISABLED              = 0;
@@ -83,13 +77,6 @@ export const ORIGIN                = 2;
 export const TINT                  = 3;
 export const TRANSFER              = 4;
 export const ADDITIONAL_HITS       = 5;
-
-/**
-* table type index.
-*/
-
-export const CRITICAL              = 0;
-export const FUMBLE                = 1;
 
 /**
 * dae special duration values.
@@ -156,6 +143,7 @@ export const PRONE_LABEL           = "Prone";
 export const RESTRAINED_LABEL      = "Restrained";
 export const STUNNED_LABEL         = "Stunned";
 export const UNCONSCIOUS_LABEL     = "Unconscious";
+export const DEAD_LABEL     	   = "Dead";
 
 /**
 * damage type strings.

@@ -2,10 +2,10 @@
  * Condition Manager.
  *
  *      ./module/conditions.js
- *      v0.0.2
+ *      v0.0.3
  */
 
-import * as CF_CONST from "./const.js";
+import * as CM_CONST from "./const.js";
 
 /**
 * EffectAttributes class.
@@ -17,7 +17,7 @@ class EffectAttributes {
     */
 
     constructor() {
-        //console.debug(CF_CONST.CF_LABEL + " | Effects.constructor()");
+        //console.debug(CM_CONST.CM_LABEL + " | Effects.constructor()");
     }
 
     /**
@@ -32,12 +32,12 @@ class EffectAttributes {
     */
 
     async set(label, key, attribute, value, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Effects.set()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | key:                  [" + key         + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | attribute:            [" + attribute   + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | value:                [" + value       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Effects.set()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | key:                  [" + key         + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | attribute:            [" + attribute   + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | value:                [" + value       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         if (!game.cub.hasCondition(label, target)) return false;
 
@@ -49,22 +49,22 @@ class EffectAttributes {
                 for (var j = 0; j < effects[i].changes.length; j++) {
                     if (effects[i].changes[j].key == key) {
                         switch (attribute) {
-                            case CF_CONST.CHANGE_MODE:
-                                console.info(String(CF_CONST.CF_LABEL + " | Set Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Change Mode:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                            case CM_CONST.CHANGE_MODE:
+                                console.info(String(CM_CONST.CM_LABEL + " | Set Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Change Mode:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                                 var changes = effects[i].changes;
                                 changes[j].mode = value;
                                 retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "changes": changes});
                                 if (!retval) return false;
                                 break;
-                            case CF_CONST.ATTRIBUTE_VALUE:
-                                console.info(String(CF_CONST.CF_LABEL + " | Set Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Value:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                            case CM_CONST.ATTRIBUTE_VALUE:
+                                console.info(String(CM_CONST.CM_LABEL + " | Set Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Value:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                                 var changes = effects[i].changes;
                                 changes[j].value = value;
                                 retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "changes": changes});
                                 if (!retval) return false;
                                 break;
-                            case CF_CONST.PRIORITY:
-                                console.info(String(CF_CONST.CF_LABEL + " | Set Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Priority:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                            case CM_CONST.PRIORITY:
+                                console.info(String(CM_CONST.CM_LABEL + " | Set Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Priority:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                                 var changes = effects[i].priority;
                                 retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "changes": changes});
                                 if (!retval) return false;
@@ -91,11 +91,11 @@ class EffectAttributes {
     */
 
     async get(label, key, attribute, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Effects.get()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | key:                  [" + key         + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | attribute:            [" + attribute   + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Effects.get()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | key:                  [" + key         + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | attribute:            [" + attribute   + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         if (!game.cub.hasCondition(label, target)) return null;
 
@@ -107,20 +107,20 @@ class EffectAttributes {
                     if (effects[i].changes[j].key == key) {
                         var value;
                         switch (attribute) {
-                            case CF_CONST.CHANGE_MODE:
+                            case CM_CONST.CHANGE_MODE:
                                 if (effects[i].changes[j].mode === undefined) return null;
                                 else value = effects[i].changes[j].mode;
-                                console.info(String(CF_CONST.CF_LABEL + " | Get Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Change Mode:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                                console.info(String(CM_CONST.CM_LABEL + " | Get Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Change Mode:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                                 break;
-                            case CF_CONST.ATTRIBUTE_VALUE:
+                            case CM_CONST.ATTRIBUTE_VALUE:
                                 if (effects[i].changes[j].value === undefined) return null;
                                 else value = effects[i].changes[j].value;
-                                console.info(String(CF_CONST.CF_LABEL + " | Get Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Value:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                                console.info(String(CM_CONST.CM_LABEL + " | Get Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Value:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                                 break;
-                            case CF_CONST.PRIORITY:
+                            case CM_CONST.PRIORITY:
                                 if (effects[i].changes[j].priority === undefined) return null;
                                 else value = effects[i].changes[j].priority;
-                                console.info(String(CF_CONST.CF_LABEL + " | Get Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Priority:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                                console.info(String(CM_CONST.CM_LABEL + " | Get Attribute:        [%c" + target.name + ":" + label + ":" + key + ":Priority:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                                 break;
                             default:
                                 return null;
@@ -144,7 +144,7 @@ class Flags {
     */
 
     constructor() {
-        //console.debug(CF_CONST.CF_LABEL + " | Flags.constructor()");
+        //console.debug(CM_CONST.CM_LABEL + " | Flags.constructor()");
     }
 
     /**
@@ -158,11 +158,11 @@ class Flags {
     */
 
     async set(label, flag, value, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Flags.set()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | flag:                 [" + flag        + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | value:                [" + value       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Flags.set()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | flag:                 [" + flag        + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | value:                [" + value       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         if (!game.cub.hasCondition(label, target)) return false;
 
@@ -172,23 +172,23 @@ class Flags {
         for (var i = 0; i < effects.length; i++) {
             if (effects[i].label == label) {
                 switch (flag) {
-                    case CF_CONST.CORE_STATUS_ID:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Flag:             [%c" + target.name + ":" + label + ":Core StatusId:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.CORE_STATUS_ID:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Flag:             [%c" + target.name + ":" + label + ":Core StatusId:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "flags.core.statusId": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.CUB_CONDITION_ID:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Flag:             [%c" + target.name + ":" + label + ":CUB ConditionId:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.CUB_CONDITION_ID:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Flag:             [%c" + target.name + ":" + label + ":CUB ConditionId:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "flags['combat-utility-belt'].conditionId": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.CUB_OVERLAY:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Flag:             [%c" + target.name + ":" + label + ":CUB Overlay:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.CUB_OVERLAY:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Flag:             [%c" + target.name + ":" + label + ":CUB Overlay:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "flags['combat-utility-belt'].overlay": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.DAE_SPECIAL_DURATION:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Flag:             [%c" + target.name + ":" + label + ":DAE Special Duration:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.DAE_SPECIAL_DURATION:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Flag:             [%c" + target.name + ":" + label + ":DAE Special Duration:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "flags.dae.specialDuration": value});
                         if (!retval) return false;
                         break;
@@ -211,10 +211,10 @@ class Flags {
     */
 
     async get(label, flag, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Flags.get()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | flag:                 [" + flag        + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Flags.get()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | flag:                 [" + flag        + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         if (!game.cub.hasCondition(label, target)) return null;
 
@@ -225,29 +225,29 @@ class Flags {
             {
                 var value;
                 switch (flag) {
-                    case CF_CONST.CORE_STATUS_ID:
+                    case CM_CONST.CORE_STATUS_ID:
                         if (effects[i].flags.core === undefined ||
                             effects[i].flags.core.statusId === undefined) return null;
                         else value = effects[i].flags.core.statusId;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Flag:             [%c" + target.name + ":" + label + ":Core StatusId:" + value + "%c]"), "color:#D64100", "color:#F0F0F0");
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Flag:             [%c" + target.name + ":" + label + ":Core StatusId:" + value + "%c]"), "color:#D64100", "color:#F0F0F0");
                         break;
-                    case CF_CONST.CUB_CONDITION_ID:
+                    case CM_CONST.CUB_CONDITION_ID:
                         if (effects[i].flags["combat-utility-belt"] === undefined ||
                             effects[i].flags["combat-utility-belt"].conditionId === undefined) return null;
                         else value = effects[i].flags["combat-utility-belt"].conditionId;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Flag:             [%c" + target.name + ":" + label + ":CUB ConditionId:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Flag:             [%c" + target.name + ":" + label + ":CUB ConditionId:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.CUB_OVERLAY:
+                    case CM_CONST.CUB_OVERLAY:
                         if (effects[i].flags["combat-utility-belt"] === undefined ||
                             effects[i].flags["combat-utility-belt"].overlay === undefined) return null;
                         else value = effects[i].flags["combat-utility-belt"].overlay;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Flag:             [%c" + target.name + ":" + label + ":CUB Overlay:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Flag:             [%c" + target.name + ":" + label + ":CUB Overlay:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.DAE_SPECIAL_DURATION:
+                    case CM_CONST.DAE_SPECIAL_DURATION:
                         if (effects[i].flags.dae === undefined ||
                             effects[i].flags.dae.specialDuration === undefined) return null;
                         else value = effects[i].flags.dae.specialDuration;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Flag:             [%c" + target.name + ":" + label + ":DAE Special Duration:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Flag:             [%c" + target.name + ":" + label + ":DAE Special Duration:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
                     default:
                         return null;
@@ -269,7 +269,7 @@ class Durations {
     */
 
     constructor() {
-        //console.debug(CF_CONST.CF_LABEL + " | Durations.constructor()");
+        //console.debug(CM_CONST.CM_LABEL + " | Durations.constructor()");
     }
 
     /**
@@ -283,11 +283,11 @@ class Durations {
     */
 
     async set(label, duration, value, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Durations.set()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | duration:             [" + duration    + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | value:                [" + value       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Durations.set()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | duration:             [" + duration    + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | value:                [" + value       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         if (!game.cub.hasCondition(label, target)) return false;
 
@@ -297,33 +297,33 @@ class Durations {
         for (var i = 0; i < effects.length; i++) {
             if (effects[i].label == label) {
                 switch (duration) {
-                    case CF_CONST.SECONDS:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Seconds:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.SECONDS:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Seconds:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "duration.seconds": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.START_TIME:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Start Time:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.START_TIME:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Start Time:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "duration.startTime": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.TURNS:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Turns:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.TURNS:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Turns:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "duration.turns": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.START_TURN:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Start Turn:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.START_TURN:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Start Turn:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "duration.startTurn": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.ROUNDS:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Rounds:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.ROUNDS:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Rounds:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "duration.rounds": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.START_ROUND:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Start Round:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.START_ROUND:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":Start Round:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "duration.startRound": value});
                         if (!retval) return false;
                         break;
@@ -346,10 +346,10 @@ class Durations {
     */
 
     async get(label, duration, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Durations.get()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | duration:             [" + duration    + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Durations.get()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | duration:             [" + duration    + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         if (!game.cub.hasCondition(label, target)) return null;
 
@@ -360,35 +360,35 @@ class Durations {
             {
                 var value;
                 switch (duration) {
-                    case CF_CONST.SECONDS:
+                    case CM_CONST.SECONDS:
                         if (effects[i].duration.seconds === undefined) return null;
                         else value = effects[i].duration.seconds;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Seconds:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Seconds:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.START_TIME:
+                    case CM_CONST.START_TIME:
                         if (effects[i].duration.startTime === undefined) return null;
                         else value = effects[i].duration.startTime;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Start Time:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Start Time:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.TURNS:
+                    case CM_CONST.TURNS:
                         if (effects[i].duration.turns === undefined) return null;
                         else value = effects[i].duration.turns;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Turns:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Turns:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.START_TURN:
+                    case CM_CONST.START_TURN:
                         if (effects[i].duration.startTurn === undefined) return null;
                         else value = effects[i].duration.startTurn;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Start Turn:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Start Turn:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.ROUNDS:
+                    case CM_CONST.ROUNDS:
                         if (effects[i].duration.rounds === undefined) return null;
                         else value = effects[i].duration.rounds;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Rounds:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Rounds:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.START_ROUND:
+                    case CM_CONST.START_ROUND:
                         if (effects[i].duration.startRound === undefined) return null;
                         else value = effects[i].duration.startRound;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Start Round:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":Start Round:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
                     default:
                         return null;
@@ -410,7 +410,7 @@ class Details {
     */
 
     constructor() {
-        //console.debug(CF_CONST.CF_LABEL + " | Details.constructor()");
+        //console.debug(CM_CONST.CM_LABEL + " | Details.constructor()");
     }
 
     /**
@@ -424,11 +424,11 @@ class Details {
     */
 
     async set(label, detail, value, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Details.set()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | detail:               [" + detail      + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | value:                [" + value       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Details.set()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | detail:               [" + detail      + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | value:                [" + value       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         if (!game.cub.hasCondition(label, target)) return false;
 
@@ -438,33 +438,33 @@ class Details {
         for (var i = 0; i < effects.length; i++) {
             if (effects[i].label == label) {
                 switch (detail) {
-                    case CF_CONST.DISABLED:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Disabled:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.DISABLED:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Disabled:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "disabled": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.ICON:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Icon:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.ICON:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Icon:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "icon": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.TINT:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Tint:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.TINT:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Tint:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "tint": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.ORIGIN:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Origin:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.ORIGIN:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Origin:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "origin": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.TRANSFER:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Transfer:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.TRANSFER:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Transfer:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         retval = await target.updateEmbeddedEntity("ActiveEffect", {"_id": effects[i]._id, "transfer": value});
                         if (!retval) return false;
                         break;
-                    case CF_CONST.ADDITIONAL_HITS:
-                        console.info(String(CF_CONST.CF_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Additional Hits:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                    case CM_CONST.ADDITIONAL_HITS:
+                        console.info(String(CM_CONST.CM_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":Additional Hits:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         var hp = target.actor.data.attributes.hp.value - value;
                         if (hp < 0) hp = 0;
                         retval = await canvas.scene.updateEmbeddedEntity("Token", {"_id": target.id, "actorData.data.attributes.hp.value": hp});
@@ -489,10 +489,10 @@ class Details {
     */
 
     async get(label, detail, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Details.get()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | detail:               [" + detail      + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Details.get()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | detail:               [" + detail      + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         if (!game.cub.hasCondition(label, target)) return null;
 
@@ -503,35 +503,35 @@ class Details {
             {
                 var value;
                 switch (detail) {
-                    case CF_CONST.DISABLED:
+                    case CM_CONST.DISABLED:
                         if (effects[i].disabled === undefined) return null;
                         else value = effects[i].disabled;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Disabled:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Disabled:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.ICON:
+                    case CM_CONST.ICON:
                         if (effects[i].icon === undefined) return null;
                         else value = effects[i].icon;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Icon:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Icon:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.TINT:
+                    case CM_CONST.TINT:
                         if (effects[i].tint === undefined) return null;
                         else value = effects[i].tint;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Tint:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Tint:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.ORIGIN:
+                    case CM_CONST.ORIGIN:
                         if (effects[i].origin === undefined) return null;
                         else value = effects[i].origin;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Origin:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Origin:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.TRANSFER:
+                    case CM_CONST.TRANSFER:
                         if (effects[i].transfer === undefined) return null;
                         else value = effects[i].transfer;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Transfer:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Transfer:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
-                    case CF_CONST.ADDITIONAL_HITS:
+                    case CM_CONST.ADDITIONAL_HITS:
                         if (target.actor.data.attributes.hp.value === undefined) return null;
                         else value = target.actor.data.attributes.hp.value;
-                        console.info(String(CF_CONST.CF_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Additional Hits:" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+                        console.info(String(CM_CONST.CM_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":Additional Hits:" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
                         break;
                     default:
                         return null;
@@ -553,7 +553,7 @@ export class ConditionManager {
     */
 
     constructor() {
-        //console.debug(CF_CONST.CF_LABEL + " | ConditionManager.constructor()");
+        //console.debug(CM_CONST.CM_LABEL + " | ConditionManager.constructor()");
     }
 
     /**
@@ -565,20 +565,20 @@ export class ConditionManager {
     */
 
     async apply(label, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Condition.apply()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Condition.apply()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         // fail if condition has already been applied to the target.
         if (game.cub.hasCondition(label, target)) {
-            console.info(String(CF_CONST.CF_LABEL + " | Condition Applied:    [%c" + target.name + ":" + label + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
-            console.error(CF_CONST.CF_LABEL + " | FAIL: Condition already applied.");
+            console.info(String(CM_CONST.CM_LABEL + " | Condition Applied:    [%c" + target.name + ":" + label + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
+            console.error(CM_CONST.CM_LABEL + " | FAIL: Condition already applied.");
             return false;
         };
 
         // apply.
         await game.cub.addCondition([label], target, {allowDuplicates: true, replaceExisting: true});
-        console.info(String(CF_CONST.CF_LABEL + " | Condition Applied:    [%c" + target.name + ":" + label + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+        console.info(String(CM_CONST.CM_LABEL + " | Condition Applied:    [%c" + target.name + ":" + label + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
         return true;
     }
 
@@ -591,20 +591,20 @@ export class ConditionManager {
     */
 
     async remove(label, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Condition.remove()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Condition.remove()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         // fail if condition has not been applied to the target.
         if (!game.cub.hasCondition(label, target)) {
-            console.info(String(CF_CONST.CF_LABEL + " | Condition Removed:    [%c" + target.name + ":" + label + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
-            console.error(CF_CONST.CF_LABEL + " | FAIL: Condition not applied.");
+            console.info(String(CM_CONST.CM_LABEL + " | Condition Removed:    [%c" + target.name + ":" + label + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
+            console.error(CM_CONST.CM_LABEL + " | FAIL: Condition not applied.");
             return false;
         };
 
         // remove.
         await game.cub.removeCondition([label], target);
-        console.info(String(CF_CONST.CF_LABEL + " | Condition Removed:    [%c" + target.name + ":" + label + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+        console.info(String(CM_CONST.CM_LABEL + " | Condition Removed:    [%c" + target.name + ":" + label + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
         return true;
     }
 
@@ -620,17 +620,17 @@ export class ConditionManager {
     */
 
     async setEffectAttribute(label, key, attribute, value, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Condition.setEffect()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | key:                  [" + key         + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | attribute:            [" + attribute   + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | value:                [" + value       + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Condition.setEffect()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | key:                  [" + key         + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | attribute:            [" + attribute   + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | value:                [" + value       + "]"));
 
         // fail if condition has not been applied to the target.
         if (!game.cub.hasCondition(label, target)) {
-            console.info(String(CF_CONST.CF_LABEL + " | Set Attribute:        [%c" + target.name + ":" + label + ":" + key + ":" + attribute + ":" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
-            console.error(CF_CONST.CF_LABEL + " | FAIL: Condition not applied.");
+            console.info(String(CM_CONST.CM_LABEL + " | Set Attribute:        [%c" + target.name + ":" + label + ":" + key + ":" + attribute + ":" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
+            console.error(CM_CONST.CM_LABEL + " | FAIL: Condition not applied.");
             return null;
         };
 
@@ -651,16 +651,16 @@ export class ConditionManager {
     */
 
     async getEffectAttribute(label, key, attribute, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Condition.getEffect()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | key:                  [" + key         + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | attribute:               [" + attribute   + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Condition.getEffect()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | key:                  [" + key         + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | attribute:               [" + attribute   + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         // fail if condition has not been applied to the target.
         if (!game.cub.hasCondition(label, target)) {
-            console.info(String(CF_CONST.CF_LABEL + " | Get Attribute:        [%c" + target.name + ":" + label + ":" + key + ":" + attribute + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
-            console.error(CF_CONST.CF_LABEL + " | FAIL: Condition not applied.");
+            console.info(String(CM_CONST.CM_LABEL + " | Get Attribute:        [%c" + target.name + ":" + label + ":" + key + ":" + attribute + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
+            console.error(CM_CONST.CM_LABEL + " | FAIL: Condition not applied.");
             return null;
         };
 
@@ -681,16 +681,16 @@ export class ConditionManager {
     */
 
     async setFlag(label, flag, value, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Condition.setFlag()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | flag:                 [" + flag        + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | value:                [" + value       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Condition.setFlag()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | flag:                 [" + flag        + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | value:                [" + value       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         // fail if condition has not been applied to the target.
         if (!game.cub.hasCondition(label, target)) {
-            console.info(String(CF_CONST.CF_LABEL + " | Set Flag:             [%c" + target.name + ":" + label + ":" + flag + ":" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
-            console.error(CF_CONST.CF_LABEL + " | FAIL: Condition not applied.");
+            console.info(String(CM_CONST.CM_LABEL + " | Set Flag:             [%c" + target.name + ":" + label + ":" + flag + ":" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
+            console.error(CM_CONST.CM_LABEL + " | FAIL: Condition not applied.");
             return null;
         };
 
@@ -710,15 +710,15 @@ export class ConditionManager {
     */
 
     async getFlag(label, flag, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Condition.getFlag()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | flag:                 [" + flag        + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Condition.getFlag()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | flag:                 [" + flag        + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         // fail if condition has not been applied to the target.
         if (!game.cub.hasCondition(label, target)) {
-            console.info(String(CF_CONST.CF_LABEL + " | Get Flag:             [%c" + target.name + ":" + label + ":" + flag + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
-            console.error(CF_CONST.CF_LABEL + " | FAIL: Condition not applied.");
+            console.info(String(CM_CONST.CM_LABEL + " | Get Flag:             [%c" + target.name + ":" + label + ":" + flag + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
+            console.error(CM_CONST.CM_LABEL + " | FAIL: Condition not applied.");
             return null;
         };
 
@@ -739,16 +739,16 @@ export class ConditionManager {
     */
 
     async setDuration(label, duration, value, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Condition.setDuration()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | duration:             [" + duration    + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | value:                [" + value       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Condition.setDuration()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | duration:             [" + duration    + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | value:                [" + value       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         // fail if condition has not been applied to the target.
         if (!game.cub.hasCondition(label, target)) {
-            console.info(String(CF_CONST.CF_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":" + duration + ":" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
-            console.error(CF_CONST.CF_LABEL + " | FAIL: Condition not applied.");
+            console.info(String(CM_CONST.CM_LABEL + " | Set Duration:         [%c" + target.name + ":" + label + ":" + duration + ":" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
+            console.error(CM_CONST.CM_LABEL + " | FAIL: Condition not applied.");
             return false;
         };
 
@@ -768,15 +768,15 @@ export class ConditionManager {
     */
 
     async getDuration(label, duration, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Condition.getDuration()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | duration:             [" + duration    + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Condition.getDuration()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | duration:             [" + duration    + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         // fail if condition has not been applied to the target.
         if (!game.cub.hasCondition(label, target)) {
-            console.info(String(CF_CONST.CF_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":" + duration + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
-            console.error(CF_CONST.CF_LABEL + " | FAIL: Condition not applied.");
+            console.info(String(CM_CONST.CM_LABEL + " | Get Duration:         [%c" + target.name + ":" + label + ":" + duration + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
+            console.error(CM_CONST.CM_LABEL + " | FAIL: Condition not applied.");
             return null;
         };
 
@@ -797,16 +797,16 @@ export class ConditionManager {
     */
 
     async setDetail(label, detail, value, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Condition.setDetail()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | detail:               [" + detail      + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | value:                [" + value       + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Condition.setDetail()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | detail:               [" + detail      + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | value:                [" + value       + "]"));
 
         // fail if condition has not been applied to the target.
         if (!game.cub.hasCondition(label, target)) {
-            console.info(String(CF_CONST.CF_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":" + detail + ":" + value + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
-            console.error(CF_CONST.CF_LABEL + " | FAIL: Condition not applied.");
+            console.info(String(CM_CONST.CM_LABEL + " | Set Detail:           [%c" + target.name + ":" + label + ":" + detail + ":" + value + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
+            console.error(CM_CONST.CM_LABEL + " | FAIL: Condition not applied.");
             return false;
         };
 
@@ -826,15 +826,15 @@ export class ConditionManager {
     */
 
     async getDetail(label, detail, target) {
-        //console.debug(CF_CONST.CF_LABEL + " | Condition.getDetail()");
-        //console.debug(String(CF_CONST.CF_LABEL + " | label:                [" + label       + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | detail:               [" + detail      + "]"));
-        //console.debug(String(CF_CONST.CF_LABEL + " | target:               [" + target.name + "]"));
+        //console.debug(CM_CONST.CM_LABEL + " | Condition.getDetail()");
+        //console.debug(String(CM_CONST.CM_LABEL + " | label:                [" + label       + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | detail:               [" + detail      + "]"));
+        //console.debug(String(CM_CONST.CM_LABEL + " | target:               [" + target.name + "]"));
 
         // fail if condition has not been applied to the target.
         if (!game.cub.hasCondition(label, target)) {
-            console.info(String(CF_CONST.CF_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":" + detail + "%c]"), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
-            console.error(CF_CONST.CF_LABEL + " | FAIL: Condition not applied.");
+            console.info(String(CM_CONST.CM_LABEL + " | Get Detail:           [%c" + target.name + ":" + label + ":" + detail + "%c]"), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
+            console.error(CM_CONST.CM_LABEL + " | FAIL: Condition not applied.");
             return null;
         };
 
