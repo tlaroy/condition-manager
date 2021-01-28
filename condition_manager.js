@@ -2,7 +2,7 @@
  * Condition Manager.
  *
  *      ./condition_manager.js
- *      v0.0.1
+ *      v0.0.2
  */
 
 import * as CF_CONST from "./module/const.js";
@@ -10,10 +10,6 @@ import { ConditionManager } from "./module/conditions.js";
 
 console.info(String(CF_CONST.CF_LABEL + " | %c" + CF_CONST.CF_NAME + "%c v" + CF_CONST.CF_VERSION + "."), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
 
-//let logged = "%cTokenMagic %c| " + output;
-//console.log(logged, "color:#4BC470", "color:#B3B3B3")
-
-var hook_id = 0; // retained for disable.
 var i18n    = key => {return game.i18n.localize(key);};
 
 /**
@@ -113,6 +109,58 @@ function checkRequirements() {
         console.error(CF_CONST.CF_LABEL + " | FAIL: DND5E v" + CF_CONST.MIN_DND5E_VERSION + " or newer required.");
         return false;
     };
+
+	// ----------------------------------------------------------
+	// Module combat-utility-belt.
+
+	if (!game.modules.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME)) {
+		ui.notifications.error(i18n("cf.failed_to_initialize"));
+		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " module not found.");
+		return false;
+	};
+	// minimum combat-utility-belt version.
+	if (versionCompare(game.modules.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME).data.version, CF_CONST.MIN_COMBAT_UTILITY_BELT_VERSION) < 0) {
+		ui.notifications.error(i18n("cf.failed_to_initialize"));
+		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " v" + CF_CONST.MIN_COMBAT_UTILITY_BELT_VERSION + " or newer required.");
+		return false;
+	};
+	// combat-utility-belt enhanced conditions must be enabled.
+	var cub_config;
+	cub_config = game.settings.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "enableEnhancedConditions");
+	if (cub_config != true) {
+		ui.notifications.error(i18n("cf.failed_to_initialize"));
+		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Enable Enhanced Conditions' must be true.");
+		return false;
+	};
+	// combat-utility-belt enhanced conditions output to chat must be enabled.
+	cub_config = game.settings.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "conditionsOutputToChat");
+	if (cub_config != true) {
+		ui.notifications.error(i18n("cf.failed_to_initialize"));
+		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Output to Chat' must be true.");
+		return false;
+	};
+	// combat-utility-belt enhanced conditions output during combat must be enabled.
+	cub_config = game.settings.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "conditionsOutputDuringCombat");
+	if (cub_config != true) {
+		ui.notifications.error(i18n("cf.failed_to_initialize"));
+		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Output During Combat' must be true.");
+		return false;
+	};
+	// combat-utility-belt enhanced conditions remove default status must be enabled.
+	cub_config = game.settings.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "removeDefaultEffects");
+	if (cub_config != true) {
+		ui.notifications.error(i18n("cf.failed_to_initialize"));
+		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Remove Default Status Effects' must be true.");
+		return false;
+	};
+	// combat-utility-belt enhanced conditions suppress preventative save reminder must be enabled.
+	cub_config = game.settings.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "conditionsSuppressPreventativeSaveReminder");
+	if (cub_config != true) {
+		ui.notifications.error(i18n("cf.failed_to_initialize"));
+		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Suppress Preventative Save Reminder' must be true.");
+		return false;
+	};
+
     return true;
 };
 
@@ -153,29 +201,19 @@ Hooks.once("init", function() {
             return game.settings.get(CF_CONST.CF_MODULE_NAME, CF_CONST.CF_ENABLED);
         },
 
-        // enable hook.
+        // enable.
         enableConditionManager: function() {
             // ----------------------------------------------------------
             // check requirements.
             if (!checkRequirements()) return;
-            // ----------------------------------------------------------
-            // set hooks.
-            console.log(CF_CONST.CF_LABEL + " | Enabled.");
-            hook_id = parseInt( Hooks.on("renderChatMessage", (message, html, data) => {
-                processAttack(message, html, data);     // attack rolls.
-                processUndo(message, html, data);       // apply/reverse buttons.
-            }));
-            // ----------------------------------------------------------
             // enable.
+            console.log(CF_CONST.CF_LABEL + " | Enabled.");
             game.settings.set(CF_CONST.CF_MODULE_NAME, CF_CONST.CF_ENABLED, true);
         },
 
-        // disable hook.
+        // disable.
         disableConditionManager: function() {
             console.log(CF_CONST.CF_LABEL + " | Disabled.");
-            var old_hook_id_1 = parseInt(hook_id);
-            Hooks.off("renderChatMessage", old_hook_id_1);
-            hook_id = 0;
             game.settings.set(CF_CONST.CF_MODULE_NAME, CF_CONST.CF_ENABLED, false);
         },
 
@@ -200,6 +238,5 @@ Hooks.once("init", function() {
 */
 
 Hooks.once("ready", function() {
-    game.ConditionManager.enableTables();
     console.info(CF_CONST.CF_LABEL + " | Ready.");
 });
