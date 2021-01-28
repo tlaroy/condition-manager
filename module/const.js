@@ -2,7 +2,7 @@
  * Condition Manager.
  *
  *      ./module/const.js
- *      v0.0.1
+ *      v0.0.2
  */
 
 /**
@@ -21,24 +21,17 @@ export const CONSOLE_DEFAULT = CONSOLE_GREY;
 
 export const MIN_FOUNDRY_VERSION             = "0.7.9";
 export const MIN_DND5E_VERSION               = "1.2.0";
-export const MIN_MIDI_QOL_VERSION            = "0.3.39";
 export const MIN_COMBAT_UTILITY_BELT_VERSION = "1.3.8";
-export const MIN_DICE_SO_NICE_VERSION        = "2.3.1";
-export const MIDI_QOL_MODULE_NAME            = "midi-qol";
-export const DICE_SO_NICE_MODULE_NAME        = "dice-so-nice";
 export const COMBAT_UTILITY_BELT_MODULE_NAME = "combat-utility-belt";
-export const CF_MODULE_NAME                  = "midi-critical-fumble";
-export const CF_NAME                         = "CRITICAL AND FUMBLE TABLES";
-export const CF_LABEL                        = "midi-cf";
-export const CF_VERSION                      = "0.0.6";
+export const CF_MODULE_NAME                  = "condition-manager";
+export const CF_NAME                         = "CONDITION MANAGER";
+export const CF_LABEL                        = "cmgr";
+export const CF_VERSION                      = "0.0.1";
 
 /**
 * options.
 */
 
-export const CF_INTEGRATE_PANELS             = "integrate-panels";
-export const CF_ANIMATE_ROLLS                = "animate-rolls";
-export const CF_APPLY_RESULTS                = "apply-results";
 export const CF_ENABLED                      = "enabled";
 
 /**
@@ -114,7 +107,29 @@ export const IS_DAMAGED_STR        = "isDamaged";
 * effect keys.
 */
 
-export const ATTRIBUTE_HP_KEY      = "data.attributes.hp.value";
+export const ATTRIBUTE_ATTACKER_ADV_ALL_KEY		= "flags.midi-qol.grants.advantage.attack.all";		// blinded, paralyzed, petrified, restrained, stunned, unconscious.
+export const ATTRIBUTE_DISADV_ATT_ALL_KEY  		= "flags.midi-qol.disadvantage.attack.all";			// blinded, poisoned, restrained.
+export const ATTRIBUTE_DISADV_ABIL_CHK_ALL_KEY  = "flags.midi-qol.disadvantage.ability.check.all"; 	// exhaustion 1, 3 & 5.
+export const ATTRIBUTE_MOVEMENT_KEY        		= "data.attributes.movement.walk";				    // exhaustion 2, grappled, incapacited, paralyzed, petrified, restrained, stunned, unconscious.
+export const ATTRIBUTE_DISADV_SAVE_ALL_KEY 		= "flags.midi-qol.disadvantage.ability.save.all";	// exhaustion 3.
+export const ATTRIBUTE_HP_MAX              		= "data.attributes.hp.max";							// exhaustion 4.
+export const ATTRIBUTE_ADV_ATT_ALL_KEY     		= "flags.midi-qol.advantage.attack.all";			// invisible.
+export const ATTRIBUTE_ATTACKER_DISADV_ALL_KEY	= "flags.midi-qol.grants.disadvantage.attack.all";	// invisible.
+export const ATTRIBUTE_TRAITS_ALL_KEY      		= "data.traits.dr.all";								// petrified.
+export const ATTRIBUTE_DISADV_ABIL_ALL_KEY 		= "flags.midi-qol.disadvantage.ability.all";		// poisoned.
+export const ATTRIBUTE_ATTACKER_ADV_MWAK_KEY 	= "flags.midi-qol.grants.advantage.attack.mwak";   	// prone.
+export const ATTRIBUTE_ATTACKER_DISADV_RWAK_KEY = "flags.midi-qol.grants.disadvantage.attack.rwak";	// prone.
+export const ATTRIBUTE_ATTACKER_ADV_MSAK_KEY 	= "flags.midi-qol.grants.advantage.attack.msak";   	// prone.
+export const ATTRIBUTE_ATTACKER_DISADV_RSAK_KEY = "flags.midi-qol.grants.disadvantage.attack.rsak";	// prone.
+export const ATTRIBUTE_DISADV_SAVE_DEX  		= "flags.midi-qol.disadvantage.ability.save.dex";	// restrained.
+export const ATTRIBUTE_AC_KEY  					= "data.attributes.ac.value";						// 1/2 & 3/4 cover.
+export const ATTRIBUTE_DEX_SAVE_KEY  			= "data.abilities.dex.save";						// 1/2 & 3/4 cover.
+export const ATTRIBUTE_BONUS_MWAK_ATT_KEY  		= "data.bonuses.mwak.attack";						// flank & rear.
+export const ATTRIBUTE_BONUS_RWAK_ATT_KEY  		= "data.bonuses.rwak.attack";						// flank & rear.
+export const ATTRIBUTE_BONUS_MSAK_ATT_KEY  		= "data.bonuses.msak.attack";						// flank & rear.
+export const ATTRIBUTE_BONUS_RSAK_ATT_KEY  		= "data.bonuses.rsak.attack";						// flank & rear.
+export const ATTRIBUTE_HP_KEY              		= "data.attributes.hp.value";						// bleeding.
+export const ATTRIBUTE_MACRO_EXECUTE_KEY   		= "macro.execute";									// dead.
 
 /**
 * condition labels.

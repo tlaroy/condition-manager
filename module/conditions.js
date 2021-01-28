@@ -2,7 +2,7 @@
  * Condition Manager.
  *
  *      ./module/conditions.js
- *      v0.0.1
+ *      v0.0.2
  */
 
 import * as CF_CONST from "./const.js";
