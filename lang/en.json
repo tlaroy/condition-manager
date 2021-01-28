@@ -1,21 +1,3 @@
 {
-    "cf.failed_to_initialize": "Critical Fumble Tables failed to initialize. Check console F12 for details.",
-    "cf.settings_enable_name": "Enable",
-    "cf.settings_enable_hint": "Enable critical and fumble rolls for all attacks. Requires Midi QOL.",
-    "cf.settings_integrate_name": "Integate",
-    "cf.settings_integrate_hint": "Integate critical and fumble results into Midi QOL panels.",
-    "cf.settings_animate_name": "Animate Rolls",
-    "cf.settings_animate_hint": "Animate critical and fumble rolls. Requires Dice so Nice.",
-    "cf.settings_apply_name": "Apply Results",
-    "cf.settings_apply_hint": "Apply critical and fumble condition results. Requires Combat Utility Belt.",
-
-    "cf.apply_hint": "Click to apply updated Conditions.",
-    "cf.reverse_hint": "Click to reverse updated Conditions.",
-    "cf.apply_all_hint": "Click to apply updated Conditions to all targets.",
-    "cf.reverse_all_hint": "Click to reverse updated Conditions to all targets.",
-
-    "cf.piercing_critical_A": "Chop to groin destroys reproductive organs. Foe dies after 8 rounds of half activity.</br>D, + 22 Hits, 5B, -50",
-    "cf.piercing_critical_B": "Blade cleaves through foe, bisecting it, or coming as close as the size of your weapon allows.</br>D, + 50 Hits, 10B, -100",
-    "cf.piercing_fumble_A":   "Execute the declared attack on the nearest ally, whoops! If no ally is in reach, an innocent bystander will do. Failing that, attack an imaginary friend.",
-    "cf.piercing_fumble_B":   "You execute a textbook headbutt... to the ground. You are prone, Stunned for three rounds, and bleeding 1/rnd."
+    "cm.failed_to_initialize": "Condition Manager failed to initialize. Check console F12 for details.",
 }
