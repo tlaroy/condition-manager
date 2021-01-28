@@ -1,8 +1,8 @@
 {
     "name": "condition-manager",
     "title": "Condition Manager",
-    "description": "Adds a macro interface for management of applied conditions.",
-    "version": "0.0.2",
+    "description": "Adds a macro interface for management of applied conditions and effects.",
+    "version": "0.0.3",
     "minimumCoreVersion": "0.7.0",
     "compatibleCoreVersion": "0.7.9",
     "author": "Nokturnel",
@@ -37,5 +37,5 @@
     "socket": true,
     "url": "https://github.com/tlaroy/condition-manager",
     "manifest": "https://github.com/tlaroy/condition-manager/raw/main/module.json",
-    "download": "https://github.com/tlaroy/condition-manager/raw/main/downloads/condition-manager-v0.0.2.zip"
+    "download": "https://github.com/tlaroy/condition-manager/raw/main/downloads/condition-manager-v0.0.3.zip"
 }

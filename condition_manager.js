@@ -2,13 +2,13 @@
  * Condition Manager.
  *
  *      ./condition_manager.js
- *      v0.0.2
+ *      v0.0.3
  */
 
-import * as CF_CONST from "./module/const.js";
+import * as CM_CONST from "./module/const.js";
 import { ConditionManager } from "./module/conditions.js";
 
-console.info(String(CF_CONST.CF_LABEL + " | %c" + CF_CONST.CF_NAME + "%c v" + CF_CONST.CF_VERSION + "."), "color:" + CF_CONST.CONSOLE_GREEN, "color:" + CF_CONST.CONSOLE_DEFAULT);
+console.info(String(CM_CONST.CM_LABEL + " | %c" + CM_CONST.CM_NAME + "%c v" + CM_CONST.CM_VERSION + "."), "color:" + CM_CONST.CONSOLE_GREEN, "color:" + CM_CONST.CONSOLE_DEFAULT);
 
 var i18n    = key => {return game.i18n.localize(key);};
 
@@ -89,9 +89,9 @@ function checkRequirements() {
     // Foundry.
 
     // minimum Foundry version.
-    if (versionCompare(game.data.version, CF_CONST.MIN_FOUNDRY_VERSION) < 0) {
+    if (versionCompare(game.data.version, CM_CONST.MIN_FOUNDRY_VERSION) < 0) {
         ui.notifications.error(i18n("cf.failed_to_initialize"));
-        console.error(CF_CONST.CF_LABEL + " | FAIL: Foundry v" + CF_CONST.MIN_FOUNDRY_VERSION + " or newer required.");
+        console.error(CM_CONST.CM_LABEL + " | FAIL: Foundry v" + CM_CONST.MIN_FOUNDRY_VERSION + " or newer required.");
         return false;
     };
 
@@ -100,64 +100,64 @@ function checkRequirements() {
 
     if (game.data.system.data.name != "dnd5e") {
         ui.notifications.error(i18n("cf.failed_to_initialize"));
-        console.error(CF_CONST.CF_LABEL + " | FAIL: DND5E system not found.");
+        console.error(CM_CONST.CM_LABEL + " | FAIL: DND5E system not found.");
         return false;
     };
     // minimum dnd5e version.
-    if (versionCompare(game.data.system.data.version, CF_CONST.MIN_DND5E_VERSION) < 0) {
+    if (versionCompare(game.data.system.data.version, CM_CONST.MIN_DND5E_VERSION) < 0) {
         ui.notifications.error(i18n("cf.failed_to_initialize"));
-        console.error(CF_CONST.CF_LABEL + " | FAIL: DND5E v" + CF_CONST.MIN_DND5E_VERSION + " or newer required.");
+        console.error(CM_CONST.CM_LABEL + " | FAIL: DND5E v" + CM_CONST.MIN_DND5E_VERSION + " or newer required.");
         return false;
     };
 
 	// ----------------------------------------------------------
 	// Module combat-utility-belt.
 
-	if (!game.modules.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME)) {
+	if (!game.modules.get(CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME)) {
 		ui.notifications.error(i18n("cf.failed_to_initialize"));
-		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " module not found.");
+		console.error(CM_CONST.CM_LABEL + " | FAIL: " + CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " module not found.");
 		return false;
 	};
 	// minimum combat-utility-belt version.
-	if (versionCompare(game.modules.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME).data.version, CF_CONST.MIN_COMBAT_UTILITY_BELT_VERSION) < 0) {
+	if (versionCompare(game.modules.get(CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME).data.version, CM_CONST.MIN_COMBAT_UTILITY_BELT_VERSION) < 0) {
 		ui.notifications.error(i18n("cf.failed_to_initialize"));
-		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " v" + CF_CONST.MIN_COMBAT_UTILITY_BELT_VERSION + " or newer required.");
+		console.error(CM_CONST.CM_LABEL + " | FAIL: " + CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " v" + CM_CONST.MIN_COMBAT_UTILITY_BELT_VERSION + " or newer required.");
 		return false;
 	};
 	// combat-utility-belt enhanced conditions must be enabled.
 	var cub_config;
-	cub_config = game.settings.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "enableEnhancedConditions");
+	cub_config = game.settings.get(CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "enableEnhancedConditions");
 	if (cub_config != true) {
 		ui.notifications.error(i18n("cf.failed_to_initialize"));
-		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Enable Enhanced Conditions' must be true.");
+		console.error(CM_CONST.CM_LABEL + " | FAIL: " + CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Enable Enhanced Conditions' must be true.");
 		return false;
 	};
 	// combat-utility-belt enhanced conditions output to chat must be enabled.
-	cub_config = game.settings.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "conditionsOutputToChat");
+	cub_config = game.settings.get(CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "conditionsOutputToChat");
 	if (cub_config != true) {
 		ui.notifications.error(i18n("cf.failed_to_initialize"));
-		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Output to Chat' must be true.");
+		console.error(CM_CONST.CM_LABEL + " | FAIL: " + CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Output to Chat' must be true.");
 		return false;
 	};
 	// combat-utility-belt enhanced conditions output during combat must be enabled.
-	cub_config = game.settings.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "conditionsOutputDuringCombat");
+	cub_config = game.settings.get(CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "conditionsOutputDuringCombat");
 	if (cub_config != true) {
 		ui.notifications.error(i18n("cf.failed_to_initialize"));
-		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Output During Combat' must be true.");
+		console.error(CM_CONST.CM_LABEL + " | FAIL: " + CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Output During Combat' must be true.");
 		return false;
 	};
 	// combat-utility-belt enhanced conditions remove default status must be enabled.
-	cub_config = game.settings.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "removeDefaultEffects");
+	cub_config = game.settings.get(CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "removeDefaultEffects");
 	if (cub_config != true) {
 		ui.notifications.error(i18n("cf.failed_to_initialize"));
-		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Remove Default Status Effects' must be true.");
+		console.error(CM_CONST.CM_LABEL + " | FAIL: " + CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Remove Default Status Effects' must be true.");
 		return false;
 	};
 	// combat-utility-belt enhanced conditions suppress preventative save reminder must be enabled.
-	cub_config = game.settings.get(CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "conditionsSuppressPreventativeSaveReminder");
+	cub_config = game.settings.get(CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME, "conditionsSuppressPreventativeSaveReminder");
 	if (cub_config != true) {
 		ui.notifications.error(i18n("cf.failed_to_initialize"));
-		console.error(CF_CONST.CF_LABEL + " | FAIL: " + CF_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Suppress Preventative Save Reminder' must be true.");
+		console.error(CM_CONST.CM_LABEL + " | FAIL: " + CM_CONST.COMBAT_UTILITY_BELT_MODULE_NAME + " configuration 'Suppress Preventative Save Reminder' must be true.");
 		return false;
 	};
 
@@ -165,78 +165,34 @@ function checkRequirements() {
 };
 
 /**
-* configurationSettings().
-*
-* Module configuration settings.
-*/
-
-function configurationSettings() {
-    //-------------------------------------------------------
-    // add to Foundry's Configure Game Settings / Module Settings dialog.
-
-    // enabled.
-    game.settings.register(CF_CONST.CF_MODULE_NAME, CF_CONST.CF_ENABLED, {
-        name:   i18n("cf.settings_enable_name"),
-        hint:   i18n("cf.settings_enable_hint"),
-        type:    Boolean,
-        scope:  "client",
-        config:  true,
-        default: true,
-    });
-};
-
-/**
 * "init" hook.
 *
 * Hook once into Foundry's initialization sequence.
-* Setup hook and namespace.
+* Check dependencies and setup namespace.
 */
 
 Hooks.once("init", function() {
+	// check dependencies.
+	if (!checkRequirements()) return;
+			
     // create a namespace within game global to share functionality with macros.
-
     game.ConditionManager = {
-        // is this module enabled (hook set)?
-        isEnabled: function() {
-            return game.settings.get(CF_CONST.CF_MODULE_NAME, CF_CONST.CF_ENABLED);
-        },
-
-        // enable.
-        enableConditionManager: function() {
-            // ----------------------------------------------------------
-            // check requirements.
-            if (!checkRequirements()) return;
-            // enable.
-            console.log(CF_CONST.CF_LABEL + " | Enabled.");
-            game.settings.set(CF_CONST.CF_MODULE_NAME, CF_CONST.CF_ENABLED, true);
-        },
-
-        // disable.
-        disableConditionManager: function() {
-            console.log(CF_CONST.CF_LABEL + " | Disabled.");
-            game.settings.set(CF_CONST.CF_MODULE_NAME, CF_CONST.CF_ENABLED, false);
-        },
-
         // return ConditionManager object.
-        getConditionManager: function() { return new ConditionManager(); }
+		getConditionManager: function() { return new ConditionManager(); }
     };
 
     // add constants to namespace.
-    game.ConditionManager.CF_CONST = CF_CONST;
+    game.ConditionManager.CM_CONST = CM_CONST;
 
-    // create configuration settings.
-    configurationSettings();
-
-    console.info(CF_CONST.CF_LABEL + " | Initialized.");
+    console.info(CM_CONST.CM_LABEL + " | Initialized.");
 });
 
 /**
 * "ready" hook.
 *
 * Hook once into Foundry's ready sequence.
-* Enable module.
 */
 
 Hooks.once("ready", function() {
-    console.info(CF_CONST.CF_LABEL + " | Ready.");
+    console.info(CM_CONST.CM_LABEL + " | Ready.");
 });
